@@ -1,9 +1,29 @@
-getResponse<Post[]>(
-    "https://jsonplaceholder.typicode.com/posts"
-).then(async content => {
-    const article = document.querySelector("article");
-    article.innerHTML = await setHtml(content);
+var contentObject: Post[];
+
+const updateButton = document.querySelector('.button');
+updateButton.addEventListener('click', () => {
+    const input: HTMLInputElement[] = Array.from(document.getElementsByTagName('input'));
+    const getNumber = (elem): number => {
+        return Number(elem.value);
+    }
+    const getString = (elem): string => {
+        return elem.value;
+    }
+    document.querySelector('article').innerHTML = setHtml(updateObjectInArray<Post[]>(contentObject, getNumber(input[0]), {
+        userId: getNumber(input[1]),
+        id: getNumber(input[2]),
+        title: getString(input[3]),
+        body: getString(input[4])
+    }))
 });
+
+getResponse<Post[]>('https://jsonplaceholder.typicode.com/posts')
+    .then(async content => {
+        const article = document.querySelector('article');
+        contentObject = content;
+        article.innerHTML = setHtml(content);
+    })
+    .catch(e => alert(e));
 
 interface Post {
     userId: number,
@@ -25,15 +45,26 @@ async function getResponse<T>(
     return body;
 }
 
-async function setHtml(
+function setHtml(
     content: Post[]
-): Promise<string> {
+): string {
     let html = ``;
-    content.forEach(elem=>html+=`    
+    content.forEach(elem => html += `    
     <ul>
         <li><span class="postId">Post ID: ${elem.id}</span>      <span class="userId">User ID: ${elem.userId}</span></li>
         <li><span class="postTitle">${elem.title}</span></li>
         <li><span class="postBody">${elem.body}</span></li>
     </ul>`)
     return html;
+}
+
+function updateObjectInArray<T>(
+    array: Post[], key: number, newKeyValue: Post
+): Post[] {
+    const clonedArray = array;
+    array.forEach(val => clonedArray.push(Object.assign({}, val)));
+    if (array.length < key)
+        return undefined;
+    clonedArray[key] = newKeyValue;
+    return clonedArray;
 }

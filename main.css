@@ -33,10 +33,26 @@ article{
     background-color: #e7e7e7;
     color: black;
     border: none;
-    border-radius: 70px;
+    border-radius: 40px;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+    height: 40px;
+    width: 100%;
+}
+
+#submit{
+    position: fixed;
+    left: 65%;
+    top: 50px;
+}
+input[type=text]{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
 }
