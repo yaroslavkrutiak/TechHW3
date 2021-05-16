@@ -42,7 +42,9 @@ article{
     height: 40px;
     width: 100%;
 }
-
+.button:hover{
+    opacity: 0.7;
+}
 #submit{
     position: fixed;
     left: 65%;
